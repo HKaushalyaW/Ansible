@@ -1,0 +1,173 @@
+---
+  - name: yaws installation
+    hosts: dev
+    remote_user: devops
+    become: yes
+    tasks:
+      - name: move tar files
+        copy:
+          src: files/yaws-1.96.tar.gz
+          dest: /opt/softwares/
+          owner: root
+          group: root
+          mode: 0755
+
+      - name: unarchive file
+        unarchive:
+          src: /opt/softwares/yaws-1.96.tar.gz
+          dest: /opt/softwares/
+          remote_src: yes
+      
+      - name: edit yaws_websocket file
+        replace:
+          path: /opt/softwares/yaws-1.96/src/yaws_websockets.erl
+          regexp: 'HashBin(\s)*=(\s)*crypto:sha.........'
+          replace: 'HashBin = crypto:hash(sha,Salted),'
+
+      - name: pam package installation
+        block:
+          - name: pam package yum installation
+            yum:
+              name: pam
+              state: present
+        rescue:
+          - name: copy rpm package
+            copy:
+              src: files/pam-1.1.8-22.el7.x86_64.rpm 
+              dest: /opt/softwares/rpm_packages/
+              owner: root
+              group: root
+              mode: 0755
+    
+          - name: install pam rpm package
+            command: "rpm -ivhr pam-1.1.8-22.el7.x86_64.rpm"
+            args:
+              chdir: /opt/softwares/rpm_packages/
+
+      - name: pam-devel package installation
+        block:
+          - name: pam-devel package - yum installation
+            yum:
+              name: pam-devel
+              state: present
+        rescue:
+          - name: copy rpm package
+            copy:
+              src: files/pam-devel-1.1.8-22.el7.x86_64.rpm
+              dest: /opt/softwares/rpm_packages/
+              owner: root
+              group: root
+              mode: 0755
+
+          - name: install pam-devel rpm package
+            command: "rpm -ivhr pam-devel-1.1.8-22.el7.x86_64.rpm"
+            args:
+              chdir: /opt/softwares/rpm_packages/
+
+      - name: yaws_installation script copy
+        copy:
+          src: files/yaws_install.sh
+          dest: /opt/softwares/
+          owner: root
+          group: root
+          mode: 0755
+
+      - name: yaws installation
+        command: "{{ item }}"
+        with_items:
+          - sudo -i /opt/softwares/yaws_install.sh
+
+      - name: yaws installation
+        command: "{{ item }}"
+        args:
+          chdir:  /opt/softwares/yaws-1.96/
+        with_items:
+          - make
+          - make install
+
+      - name: copy yaws_conf files
+        copy:
+          src: files/yaws_conf_ansible.tar.gz
+          dest: /usr/local/var/yaws/www/
+          owner: root
+          group: root
+          mode: 0755
+
+      - name: unarchive yaws_conf file
+        unarchive:
+          src: /usr/local/var/yaws/www/yaws_conf_ansible.tar.gz
+          dest: /usr/local/var/yaws/www/
+          remote_src: yes
+
+      - name: config cam_admin file
+        template:
+          src:  templates/cam_admin.conf.j2
+          dest: /usr/local/var/yaws/www/yaws_conf/cam_admin.conf
+          mode: 0755
+
+      - name: copy etc_yaws_conf files
+        copy:
+          src:  files/yaws_conf_etc.tar.gz
+          dest: /usr/local/etc/
+          owner:  root
+          group:  root
+          mode: 0755
+
+      - name: unarchive files
+        unarchive:
+          src:  /usr/local/etc/yaws_conf_etc.tar.gz
+          dest: /usr/local/etc/
+          remote_src: yes
+
+
+      - name: config yaws_conf files
+        template:
+          src:  templates/yaws_conf.j2
+          dest: /usr/local/etc/yaws/yaws.conf
+          mode: 0755
+
+      - name: Copy Library files
+        copy:
+          src: "{{ item }}"
+          dest: /home/otpuser/lib/erlang/lib/
+        with_items:
+          - files/crypto-3.2.tar.gz
+          - files/odbc-2.10.18.tar.gz
+          - files/rfc4627_jsonrpc-0.01.tar.gz
+          - files/ssl-5.3.2.tar.gz
+
+      - name: Unarchive Crypto file
+        unarchive:
+          src: /home/otpuser/lib/erlang/lib/crypto-3.2.tar.gz
+          dest: /home/otpuser/lib/erlang/lib/
+          remote_src: yes
+
+      - name: Unarchive ODBC library file
+        unarchive:
+          src: /home/otpuser/lib/erlang/lib/odbc-2.10.18.tar.gz
+          dest: /home/otpuser/lib/erlang/lib/
+          remote_src: yes
+
+      - name: Unarchive jsonrpc library file
+        unarchive:
+          src: /home/otpuser/lib/erlang/lib/rfc4627_jsonrpc-0.01.tar.gz
+          dest: /home/otpuser/lib/erlang/lib/
+          remote_src: yes
+
+      - name: Unarchive SSL library file
+        unarchive:
+          src: /home/otpuser/lib/erlang/lib/ssl-5.3.2.tar.gz
+          dest: /home/otpuser/lib/erlang/lib/
+          remote_src: yes
+
+      - name: Copy startup script
+        copy:
+          src:  files/yaws
+          dest: /etc/init.d/
+          owner:  root
+          group:  root
+          mode: '0755'
+
+      - name: Start yaws service
+        command:  "/etc/init.d/yaws start"
+

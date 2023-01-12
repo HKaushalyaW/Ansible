@@ -1,0 +1,271 @@
+
+# conf for yaws
+
+# First we have a set of globals that apply to all virtual servers
+
+# This is the directory where all logfiles for
+# all virtual servers will be written.
+logdir = /usr/local/var/log/yaws
+
+# These are the paths to directories where additional
+# beam code can be placed. The daemon will add these
+# directories to its search path.
+ebin_dir = /usr/local/var/yaws/www/rbt_admin/erl/ebin
+ebin_dir = /usr/local/var/yaws/www/vms_admin/erl/ebin
+ebin_dir = /usr/local/var/yaws/www/vmail/erl/ebin
+ebin_dir = /usr/local/lib/yaws/examples/ebin
+ebin_dir = /usr/local/var/yaws/ebin
+ebin_dir = /usr/local/var/yaws/www/cam_admin/erl/ebin/
+ebin_dir = /usr/local/var/yaws/www/vsms_admin/erl/ebin/
+ebin_dir = /usr/local/var/yaws/www/campaign_manager/erl/ebin/
+ebin_dir = /usr/local/var/yaws/www/yaws_conf/ebin/
+ebin_dir = /usr/local/var/yaws/www/sce_rest_api/
+ebin_dir = /usr/local/var/yaws/www/sce_rest_api/ebin
+ebin_dir = /usr/local/var/yaws/www/ivr_rest_api/
+ebin_dir = /usr/local/var/yaws/www/prime/server/
+ebin_dir = /usr/local/var/yaws/www/ivr_admin/erl/ebin/
+ebin_dir = /usr/local/var/yaws/www/prompts_manager/erl/ebin/
+ebin_dir = /usr/local/var/yaws/www/sce_admin/erl/ebin/
+ebin_dir = /home/otpuser/lib/erlang/lib/ipms_conf-1.1/ebin
+ebin_dir = /usr/local/var/yaws/www/bulksms/erl/ebin/
+ebin_dir = /usr/local/var/yaws/www/bulksms_client/erl/ebin/
+ebin_dir = /usr/local/var/yaws/www/prime_user/erl/ebin
+ebin_dir = /usr/local/var/yaws/www/prime/server/
+
+ebin_dir = /opt/prime_wn/prime_smsc/system/lib/prime_mmsc-1.2/ebin/
+ebin_dir = /opt/prime_wn/prime_smsc/system/lib/prime_smshub-1.1/ebin/
+ebin_dir = /usr/local/var/yaws/www/yaws_conf/ebin/
+ebin_dir = /home/otpuser/lib/erlang/lib/rfc4627_jsonrpc-0.01/ebin/
+ebin_dir = /opt/prime_wn/prime_smsc/system/lib/prime_lib-1.4/ebin/
+ebin_dir = /opt/prime_wn/prime_smsc/system/lib/prime_routesvr-1.4/ebin/
+#ebin_dir = /opt/prime/prime_smsc/system/lib/prime_admin-1.2.10/ebin
+ebin_dir = /opt/prime_wn/prime_smsc/system/lib/prime_admin-1.3/ebin/
+ebin_dir = /opt/alert_me_wn/system/lib/prime_smshub-2.0/ebin/
+ebin_dir = /opt/prime_wn/prime_smsc/system/lib/prime_mtsc-1.4/ebin/
+ebin_dir = /opt/prime_wn/prime_smsc/system/lib/prime_vas-1.2/ebin/
+ebin_dir = /usr/local/var/yaws/www/mcg_admin/erl/ebin
+ebin_dir = /usr/local/var/yaws/www/obd_admin/erl/ebin
+# This is a directory where application specific .hrl
+# files can be placed. Application-specific .yaws code can
+# then include these .hrl files.
+include_dir = /usr/local/var/yaws/www/vms_admin/erl
+include_dir = /usr/local/var/yaws/www/vsms_admin/erl
+include_dir = /usr/local/var/yaws/www/vmail/erl
+include_dir = /usr/local/lib/yaws/examples/include
+
+include_dir = /home/otpuser/lib/erlang/lib/rfc4627_jsonrpc-0.01/include
+
+
+# # Set this to an integer value to control
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_admin-1.2.14/include
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_lib-1.2.12/include
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_routesvr-1.2.12/include
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_mosc-1.1.11/include
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_mtsc-1.2.11/include
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_mmsc-1.1.4/include
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_smshub-1.1/include
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_smsfw-1.4.3/include
+# # #include_dir = /opt/prime/prime_smsc/system/lib/prime_vas-1.1.1/include
+# # #include_dir = /opt/alert_me/system/lib/prime_smshub-1.1/include
+# # #include_dir = /home/otpuser/lib/erlang/lib/ipms_conf-1.0/include
+# # #include_dir = /home/otpuser/lib/erlang/lib/lib/ipms_conf-1.0/priv/
+
+#  #include_dir = /opt/prime/prime_smsc/system/lib/rfc4627_jsonrpc-0.01/include
+#  # Set this to an integer value to control
+#  include_dir = /opt/prime/prime_smsc/system/lib/lib/prime_admin-1.2/include
+#  include_dir = /opt/prime/prime_smsc/system/lib/lib/prime_lib-1.2/include
+#  include_dir = /opt/prime/prime_smsc/system/lib/lib/prime_routesvr-1.2/include
+#  include_dir = /opt/prime/prime_smsc/system/lib/lib/prime_mosc-1.1/include
+#  include_dir = /opt/prime/prime_smsc/system/lib/lib/prime_mtsc-1.2/include
+#  include_dir = /opt/prime/prime_smsc/system/lib/lib/prime_mmsc-1.1/include
+#  include_dir = /opt/prime/prime_smsc/system/lib/lib/prime_smshub-1.1/include
+#  include_dir = /opt/prime/prime_smsc/system/lib/lib/prime_smsfw-1.4/include
+#  include_dir = /opt/alert_me/system/lib/lib/prime_smshub-1.1/include
+
+
+include_dir = /home/otpuser/lib/erlang/lib/rfc4627_jsonrpc-0.01/include
+# Set this to an integer value to control
+include_dir = /usr/local/var/yaws/www/vms_admin/erl
+include_dir = /usr/local/var/yaws/www/vmail/erl
+include_dir = /home/otpuser/lib/erlang/lib/rfc4627_jsonrpc-0.01/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_admin-1.3/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_lib-1.4/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_routesvr-1.4/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_mosc-1.3/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_mtsc-1.4/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_mmsc-1.2/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_smshub-1.1/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_smsfw-1.5/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_vas-1.2/include
+include_dir = /opt/alert_me_wn/system/lib/prime_smshub-2.0/include
+
+include_dir = /usr/local/lib/yaws/examples/include
+include_dir = /usr/local/var/yaws/www/obd_admin/erl
+include_dir = /usr/local/var/yaws/www/bulksms/erl/
+include_dir = /usr/local/var/yaws/www/bulksms_client/erl/
+include_dir = /usr/local/var/yaws/www/bulk_sms/erl
+include_dir = /usr/local/var/yaws/www/cam_admin/erl/
+include_dir = /usr/local/var/yaws/www/sce_rest_api/
+include_dir = /usr/local/var/yaws/www/ivr_admin/conf/
+include_dir = /usr/local/var/yaws/www/prompts_manager/conf/
+include_dir = /usr/local/var/yaws/www/sce_admin/conf/
+include_dir = /usr/local/var/yaws/www/prime_user/erl
+include_dir = /usr/local/var/yaws/www/yaws_conf/include/
+include_dir = /opt/prime_wn/prime_smsc/system/lib/prime_vas-1.2/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_lib-1.4/include
+include_dir = /home/otpuser/lib/erlang/lib/prime_routesvr-1.4/include/
+#include_dir = /usr/local/var/yaws/www/prime_vas-1.1.3/include
+
+
+ include_dir = /home/otpuser/lib/erlang/lib/lib/ipms_conf-1.0/include
+ include_dir = /home/otpuser/lib/erlang/lib/lib/lib/ipms_conf-1.0/priv/
+include_dir  = /usr/local/var/yaws/www/mcg_admin/erl
+
+
+
+
+
+# max number of connections from clients into the server.
+max_connections = nolimit
+
+# Normally, yaws does not restrict the number of times a connection is
+# kept alive using keepalive. Setting this parameter to an integer X
+# will ensure that connections are closed once they have been used X times.
+# This can be a useful to guard against long running connections
+# collecting too much garbage in the Erlang VM.
+keepalive_maxuses = nolimit
+
+# Override the garbage collection option parameters for processes
+# that handle new connections. Useful for systems expecting long-lived
+# connections that handle a lot of data. The default value is Erlang's
+# default. Valid options are {fullsweep_after, X} and/or {min_heap_size, Y} where
+# X and Y are integers. See Erlang's erlang:spawn_opt/4 function for more
+# details. The value type is a quoted string containing an Erlang proplist or
+# the atom undefined.
+process_options = "[]"
+max_size_cached_file = 10240000
+max_num_cached_bytes = 104857600
+# Set the size of the cached acceptor process pool. The value must be an
+# integer greater than or equal to 0. The default pool size is 8. Setting
+# the pool size to 0 effectively disables the pool.
+#acceptor_pool_size = 8
+
+# This is a debug variable, possible values are http | traffic | false
+# It is also possible to set the trace (possibly to the tty) while
+# invoking yaws from the shell as in
+# yaws -i -T -x (see man yaws).
+trace = false
+
+# Enable this if we want to use the old OTP ssl implementation
+# OTP R13B03 is known to work with this flag set to false (default).
+use_old_ssl = true
+
+# It is possible to have yaws start additional application-specific code at
+# startup. Set runmod to the name of the module you want yaws to start. It
+# assumes the module has an exported function start/0. To have multiple
+# runmods just add more "runmod = xyz" lines.
+#
+# runmod = mymodule
+
+runmod=ipms_conf_app
+runmod=wn_yaws_conf
+runmod=odbc
+
+# By default yaws will copy the erlang error_log and
+# append it to a wrap log called report.log (in the logdir).
+# This feature can be turned off. This would typically
+# be the case when yaws runs within another larger app.
+copy_error_log = true
+
+# Logs are wrap logs
+log_wrap_size = 1000000
+
+# Possibly resolve all hostnames in logfiles so webalizer
+# can produce the nice geography piechart
+log_resolve_hostname = false
+
+# Fail completely or not if yaws fails to bind a listen socket.
+fail_on_bind_err = true
+
+# If HTTP auth is used, it is possible to have a specific
+# auth log. As of release 1.90 the global auth_log is
+# deprecated and ignored. Now, this variable must be set in
+# server part
+#auth_log = true
+
+# When we're running multiple yaws systems on the same
+# host, we need to give each yaws system an individual
+# name. Yaws will write a number of runtime files under
+# ${HOME}/.yaws/yaws/${id}
+# The default value is "default"
+# If we're not planning to run multiple webservers on the
+# same host it's much better to leave this value unset since
+# then all the ctl function (--stop et.el) work without having
+# to supply the id.
+#
+# id = myname
+
+# Earlier versions of Yaws picked the first virtual host
+# in a list of hosts with the same IP/PORT when the Host:
+# header doesn't match any name on any Host.
+# This is often nice in testing environments but not
+# acceptable in real-world hosting scenarios;
+# think http://porn.bigcompany.com
+pick_first_virthost_on_nomatch = true
+
+# If the HTTP client session is to be kept alive, wait this many
+# milliseconds for a new request before timing out the connection. Note
+# that infinity is a valid value but it's not recommended.
+keepalive_timeout = 30000
+
+# Now, a set of virtual servers.
+# The examples below first show two virthosted servers on the same IP (0.0.0.0)
+# in this case, but an explicit IP can be given as well.
+
+#<server {{ ansible_facts['hostname'] }}>
+#        port = 443
+#        listen = 0.0.0.0
+#        docroot = /usr/local/var/yaws/www
+#        partial_post_size = nolimit
+#        auth_log = true
+#        <ssl>
+#	        keyfile = /etc/pki/tls/certs/wns1a.key
+#                certfile = /etc/pki/tls/certs/wins1a.cer
+#                #dhfile = /usr/local/etc/yaws/dhparams.pem
+#                depth = 0
+#
+#      </ssl>
+       # appmods = <cgi-bin, yaws_appmod_cgi> <prime_provision_rest, sms_mms_provision_rest> <cam_admin, cam_route exclude_paths /cam_admin/css /cam_admin/js /cam_admin/erl /cam_admin/images /cam_admin/images/logos /cam_admin/tmp /cam_admin/yaws /cam_admin/login.yaws /cam_admin/test_login.yaws /cam_admin/reset_password.html>
+ #       appmods = <sse, dashboard_socket> <cgi-bin, yaws_appmod_cgi><rbt_admin, rbt_route exclude_paths /rbt_admin/css /rbt_admin/js /rbt_admin/erl /rbt_admin/images /rbt_admin/tmp /rbt_admin/yaws /rbt_admin/contents> <bulksms, bulk_route exclude_paths /bulksms/accordion_demo /bulksms/css /bulksms/erl /bulksms/images /bulksms/img /bulksms/js /bulksms/templates /bulksms/tmp /bulksms/yaws> <bulksms_client, bulk_client_route exclude_paths /bulksms_client/accordion_demo /bulksms_client/css /bulksms_client/erl /bulksms_client/images /bulksms_client/js /bulksms_client/templates /bulksms_client/tmp /bulksms_client/yaws> <pr_marketing, pr_client_route exclude_paths /pr_marketing/accordion_demo /pr_marketing/css /pr_marketing/erl /pr_marketing/images /pr_marketing/js /pr_marketing/templates /pr_marketing/tmp /pr_marketing/yaws /pr_marketing/numlist> <common_admin, ca_route exclude_paths /common_admin/css /common_admin/js /common_admin/erl /common_admin/images /common_admin/tmp /common_admin/yaws /common_admin/login.yaws> <customer_admin, cus_route exclude_paths /customer_admin/css /customer_admin/js /customer_admin/erl /customer_admin/images /customer_admin/tmp /customer_admin/yaws /customer_admin/login.yaws /customer_admin/test.html> <obd_admin, obd_route exclude_paths /obd_admin/css /obd_admin/js /obd_admin/erl /obd_admin/images /obd_admin/tmp /obd_admin/yaws /obd_admin/contents /obd_admin/api> <vmail, vmail_route exclude_paths /vmail/css /vmail/js /vmail/erl /vmail/images /vmail/tmp /vmail/yaws /vmail/login.yaws /vmail/contents> <mcg_admin, mcg_route exclude_paths /mcg_admin/css /mcg_admin/js /mcg_admin/erl /mcg_admin/images /mcg_admin/tmp /mcg_admin/yaws /mcg_admin/contents> <bulk_sms, bulk_sms_route exclude_paths /bulk_sms/css /bulk_sms/js /bulk_sms/erl /bulk_sms/images /bulk_sms/tmp /bulk_sms/yaws> <cam_admin, cam_route exclude_paths /cam_admin/css /cam_admin/js /cam_admin/erl /cam_admin/images /cam_admin/tmp /cam_admin/yaws /cam_admin/login.yaws /cam_admin/test_login.yaws /cam_admin/reset_password.html> <vsms_admin, vsms_route exclude_paths /vsms_admin/vsms_admin_permissions.txt /vsms_admin/css /vsms_admin/js /vsms_admin/erl /vsms_admin/images /vsms_admin/tmp /vsms_admin/yaws> <voicemail, voicemail_api>  <ivr_admin, ivr_route exclude_paths /ivr_admin/templates/ /ivr_admin/css /ivr_admin/js /ivr_admin/erl /ivr_admin/images /ivr_admin/tmp /ivr_admin/yaws /ivr_admin/login.yaws /ivr_admin/test.html> <sce_admin, sce_route exclude_paths /sce_admin/templates/ /sce_admin/css /sce_admin/js /sce_admin/erl /sce_admin/images /sce_admin/tmp /sce_admin/yaws /sce_admin/login.yaws /sce_admin/test.html> <fsa, fsa_rest> <ivr, ivr_rest> <ccg, rest_cg_api> <prompts_manager, pm_route exclude_paths /prompts_manager/templates/ /prompts_manager/css /prompts_manager/js /prompts_manager/erl /prompts_manager/images /prompts_manager/tmp /prompts_manager/yaws /prompts_manager/login.yaws /prompts_manager/test.html><vms_admin, vms_route exclude_paths /vms_admin/css /vms_admin/js /vms_admin/erl /vms_admin/images /vms_admin/tmp /vms_admin/yaws /vms_admin/contents><vms, vms_rest_api><vsms_rest,vsms_rest ><alert_me, primeutil_rest_api> <prime_user, prime_route exclude_paths /prime_user/manage_permissions.html /prime_user/css /prime_user/js /prime_user/erl /prime_user/images /prime_user/tmp /prime_user/yaws /prime_user/login.yaws /prime_user/reset_password.html /prime_user/include>
+#</server>
+
+#<server localhost>
+#        port = 80
+#        listen = 0.0.0.0
+ #       docroot = /tmp
+  #      dir_listings = true
+   #     auth_log = true
+    #    statistics = true
+     #   <auth>
+      #          realm = foobar
+       #         dir = /
+        #        user = foo:bar
+         #       user = baz:bar
+      #  </auth>
+#</server>
+
+# Now an SSL server
+
+<server {{ ansible_facts['hostname'] }}>
+        port = 8002
+        docroot = /usr/local/var/yaws/www
+        listen = 0.0.0.0
+        partial_post_size = nolimit
+        auth_log = true
+        #<ssl>
+        #keyfile = /etc/pki/tls/certs/cert.key.pem
+        #certfile = /etc/pki/tls/certs/cert.crt.pem
+         #depth = 0
+        #</ssl>
+appmods = <alert_me, primeutil_rest_api>
+</server>
