@@ -1,0 +1,23 @@
+---
+  - name: haProxy configuration
+    hosts:  fusion
+    remote_user:  devops
+    become: yes
+    tasks:
+      - name: Install haProxy
+        block:
+          - name: haproxy install
+            yum:
+              name: haproxy
+              state:  present
+        rescue:
+          - name: copy rpm files
+            copy:
+              src:  files/haproxy-1.5.18-9.el7.x86_64.rpm
+              dest: /opt/softwares/rpm_packages/
+
+          - name: install rpm package
+            command: rpm -ivh haproxy-1.5.18-9.el7.x86_64.rpm
+            args:
+              chdir:  /opt/softwares/rpm_packages/
+
