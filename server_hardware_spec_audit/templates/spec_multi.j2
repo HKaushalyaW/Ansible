@@ -1,0 +1,249 @@
+<html>
+
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('#example').DataTable({
+				scrollX: true
+			});
+		});
+	</script>
+
+</head>
+
+<body style="background: ghostwhite;">
+	<!-- Modal: modalCart -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 style="text-align: center"> Hardware Spec Report </h1>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="row">
+			<div class="col-md-12">
+				<table id="example" class="display table table-hover table-striped table-bordered" style="width:100%">
+					<thead class="thead-light">
+						<tr class="table-primary">
+							<th>IP</th>
+							<th>Hostname</th>
+							<th>OS</th>
+							<th>Version</th>
+							<th>Core(s)</th>
+							<th>CPU(s)</th>
+							<th>Thread(s)</th>
+							<th>SESTATUS</th>
+							<th>Memory</th>
+							<th>SWAP</th>
+							<th>/</th>
+							<th>/boot</th>
+							<th>/db</th>
+							<th>/home</th>
+							<th>/logs</th>
+							<th>/opt</th>
+							<th>/tmp</th>
+							<th>/usr</th>
+							<th>/var</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for host in groups['dev'] %}
+						<tr>
+							{% if hostvars[host]['ansible_default_ipv4']['address'] is defined %}
+								<td style="color:blue"><b>{{ hostvars[host]['ansible_default_ipv4']['address'] }}</td>
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['ansible_hostname'] is defined %}
+								<td style="color:blue"><b>{{ hostvars[host]['ansible_hostname'] }}</td>
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['ansible_distribution'] is defined %}
+								<td>{{ hostvars[host]['ansible_distribution'] }}</td>
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['ansible_distribution_version'] is defined %}
+								<td>{{ hostvars[host]['ansible_distribution_version'] }}</td>
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['ansible_processor_cores'] is defined %}
+								<td>{{ hostvars[host]['ansible_processor_cores'] }}</td>
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['ansible_processor_count'] is defined %}
+								<td>{{ hostvars[host]['ansible_processor_count'] }}</td>
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['ansible_processor_threads_per_core'] is defined %}
+								<td>{{ hostvars[host]['ansible_processor_threads_per_core'] }}</td>
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['ansible_selinux']['status'] is defined %}
+								<td><b>{{ hostvars[host]['ansible_selinux']['status'] }}</b></td>
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_memory']['system']['total'] is defined %}
+							{% set memomnt = hostvars[host]['facter_memory']['system']['total'].split()[0] | int %}
+								{% if memomnt >= (memVal-bandwidth)  %}
+								  <td style="color:green"><b>{{ memomnt }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ memomnt }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_memory']['swap']['total'] is defined %}
+							{% set swapmnt = hostvars[host]['facter_memory']['swap']['total'].split()[0] | int %}
+								{% if swapmnt >= (swapVal-bandwidth) %}
+								  <td style="color:green"><b>{{ swapmnt }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ swapmnt }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/']['size'] is defined %}
+							{% set rootmount = hostvars[host]['facter_mountpoints']['/']['size'].split()[0] | int %}
+								{% if rootmount >= (rootVal-bandwidth) %}
+								  <td style="color:green"><b>{{ rootmount }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ rootmount }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/boot']['size'] is defined %}
+							{% set bootmount =  ansible_facts['facter_mountpoints']['/boot']['size'].split()[0] | int  %}
+								{% if ansible_facts['facter_mountpoints']['/boot']['size'].split()[1] == "MiB" %}
+									<td style="color:green"><b>{{ (bootmount / 1024) |  round(1,'floor') }}</td>
+								{% else %}
+       						<td style="color:green"><b>{{ bootmount }} </td>
+   							{% endif %}	
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/db']['size'] is defined %}
+							{% set dbmount = hostvars[host]['facter_mountpoints']['/db']['size'].split()[0] | int %}
+								{% if dbmount >= (dbVal-bandwidth) %}
+								  <td style="color:green"><b>{{ dbmount }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ dbmount }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/home']['size'] is defined %}
+							{% set homemount = hostvars[host]['facter_mountpoints']['/home']['size'].split()[0] | int %}
+								{% if homemount >= (homeVal-bandwidth) %}
+								  <td style="color:green"><b>{{ homemount }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ homemount }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/logs']['size'] is defined %}
+							{% set logmount = hostvars[host]['facter_mountpoints']['/logs']['size'].split()[0] | int %}
+								{% if logmount >= (logsVal-bandwidth) %}
+								  <td style="color:green"><b>{{ logmount }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ logmount }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/opt']['size'] is defined %}
+							{% set optmount = hostvars[host]['facter_mountpoints']['/opt']['size'].split()[0] | int %}
+								{% if optmount >= (optVal-bandwidth) %}
+								  <td style="color:green"><b>{{ optmount }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ optmount }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/tmp']['size'] is defined %}
+							{% set tmpmount = hostvars[host]['facter_mountpoints']['/tmp']['size'].split()[0] | int %}
+								{% if tmpmount >= (tmpVal-bandwidth) %}
+								  <td style="color:green"><b>{{ tmpmount }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ tmpmount }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/usr']['size'] is defined %}
+							{% set usrmount = hostvars[host]['facter_mountpoints']['/usr']['size'].split()[0] | int %}
+								{% if usrmount >= (usrVal-bandwidth) %}
+								  <td style="color:green"><b>{{ usrmount }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ usrmount }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+							{% if hostvars[host]['facter_mountpoints']['/var']['size'] is defined %}
+							{% set varmount = hostvars[host]['facter_mountpoints']['/var']['size'].split()[0] | int %}
+								{% if varmount >= (varVal-bandwidth) %}
+								  <td style="color:green"><b>{{ varmount }}</td>
+								{% else %}
+									<td style="color:red"><b>{{ varmount }}</td>
+								{% endif %}
+							{% else %}
+							    <td style="color:red"><b> - </td>
+							{% endif %}
+
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

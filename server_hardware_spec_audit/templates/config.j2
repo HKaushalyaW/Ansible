@@ -1,0 +1,15 @@
+date: {{ ansible_facts['date_time']['date'] }}
+ip_address: {{ ip.replace(".",",") }}
+inteface: {{ ansible_facts['default_ipv4']['interface'] }}
+OS: {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}
+hostname: {{ ansible_facts['hostname'] }}
+Total Memory:  {{ (mem|int / 1024) | round(1,'floor') }} 
+{% if ansible_facts['facter_mountpoints']['/opt1'] is defined %}
+opt: {{ ansible_facts['facter_mountpoints']['/opt']['size'] }}
+{% else %}
+opt: not defined
+{% endif %}
+tmp: {{ ansible_facts['facter_mountpoints']['/tmp']['size'] }}
+logs: {{ ansible_facts['facter_mountpoints']['/logs']['size'] }}
+swap: {{ ansible_facts['facter_memory']['swap']['total'] }}
+memory: {{ ansible_facts['facter_memory']['system']['total'] }}

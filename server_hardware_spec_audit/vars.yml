@@ -1,0 +1,17 @@
+#Server Requirements (mount values should be GB)
+
+bandwidth: 1
+OSVersion: 7.6
+memVal: 12
+swapVal: 5
+rootVal: 21
+bootVal: 1
+dbVal: 50
+homeVal: 10
+logsVal: 300
+optVal: 50
+tmpVal: 10
+usrVal: 20
+varVal: 20
+
+

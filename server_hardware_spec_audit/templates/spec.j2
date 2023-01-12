@@ -1,0 +1,113 @@
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body class="modal-open"  style="background-color: #E6E6FA">
+<!-- Modal: modalCart -->
+<div class="modal fade show" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: block"
+  aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h3 class="modal-title">Server Hardware Spec</h3>        
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Spec name</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>IP</td>
+              <td>{{ ansible_facts['default_ipv4']['address'] }}</td>
+            </tr>
+            <tr>
+              <td>Hostname</td>
+              <td>{{ ansible_facts['hostname'] }}</td>
+            </tr>
+            <tr>
+              <td>OS</td>
+              <td>{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}</td>
+            </tr>
+			<tr>
+              <td>Processor Cores</td>
+              <td>{{ ansible_facts['processor_cores'] }}</td>
+            </tr>
+			<tr>
+              <td>Processor Count</td>
+              <td>{{ ansible_facts['processor_count'] }}</td>
+            </tr>
+			<tr>
+              <td>Threads Per Core</td>
+              <td>{{ ansible_facts['processor_threads_per_core'] }}</td>
+            </tr>
+			<tr>
+              <td>SESTATUS</td>
+              <td>{{ ansible_facts['selinux']['status'] }}</td>
+            </tr>
+            <tr>
+              <td>Memory</td>
+              <td>{{ ansible_facts['facter_memory']['system']['total'] }}</td>
+            </tr>
+			<tr>
+              <td>SWAP</td>
+              <td>{{ ansible_facts['facter_memory']['swap']['total'] }}</td>
+            </tr>
+			<tr>
+              <td>/</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/']['size'] }}</td>
+            </tr>
+			<tr>
+              <td>/boot</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/boot']['size'] }}</td>
+            </tr>
+			<tr>
+              <td>/db</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/db']['size'] }}</td>
+            </tr>
+			<tr>
+              <td>/home</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/home']['size'] }}</td>
+            </tr>
+			<tr>
+              <td>/logs</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/logs']['size'] }}</td>
+            </tr>
+			<tr>
+              <td>/opt</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/opt']['size'] }}</td>
+            </tr>
+			<tr>
+              <td>/tmp</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/tmp']['size'] }}</td>
+            </tr>
+			<tr>
+              <td>/usr</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/usr']['size'] }}</td>
+            </tr>
+			<tr>
+              <td>/var</td>
+              <td>{{ ansible_facts['facter_mountpoints']['/var']['size'] }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal: modalCart -->
+</body>
+</html>

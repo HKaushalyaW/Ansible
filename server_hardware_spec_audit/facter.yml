@@ -1,0 +1,15 @@
+---
+  - name: template testing
+    hosts: all 
+    remote_user:  devops
+    become: yes
+    gather_facts: yes
+    gather_subset: all
+    gather_timeout: 100
+    vars_files:
+      - vars.yml
+    tasks:
+      - name: facter package  install 
+        yum:
+          name: facter
+          state: latest
