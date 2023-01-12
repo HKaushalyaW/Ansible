@@ -1,0 +1,204 @@
+---
+  - name: Erlang Installation
+    hosts:  fusion
+    remote_user:  devops
+    become: yes
+    tasks:
+      - name: Create Directories
+        file:
+          path: "{{ item }}"
+          state: directory
+          mode: 0755
+        with_items:
+          - /opt/softwares
+          - /opt/softwares/rpm_packages
+
+      - name: copy rpm packages
+        copy:
+          src: "{{ item }}"
+          dest: /opt/softwares/rpm_packages/
+          owner: root
+          group: root
+          mode: 0755
+        with_items:
+          - files/lksctp-tools-1.0.17-2.el7.x86_64.rpm
+          - files/lksctp-tools-devel-1.0.17-2.el7.x86_64.rpm
+          - files/mod_ssl-2.4.6-80.el7.centos.1.x86_64.rpm
+          - files/mysql-connector-odbc-5.2.5-7.el7.x86_64.rpm
+          - files/ncurses-devel-5.9-14.20130511.el7_4.x86_64.rpm
+          - files/openssl-devel-1.0.2k-12.el7.x86_64.rpm
+          - files/php-odbc-5.4.16-45.el7.x86_64.rpm
+          - files/unixODBC-2.3.1-11.el7.x86_64.rpm
+          - files/unixODBC-devel-2.3.1-11.el7.x86_64.rpm
+
+      - name: install packages
+        yum:
+          name: "{{ item }}"
+          state: present
+        with_items:
+          - openssl
+          - openssl-devel
+          - ncurses
+          - gcc
+          - glibc-devel
+          - make
+          - autoconf
+
+      - name: unixODBC package install
+        block:
+          - name: installing odbc package
+            yum:
+              name: unixODBC
+              state:  present
+        rescue:
+          - debug:
+              msg:  "No package unixODBC available"
+
+          - name: installing odbc rpm package
+            yum:
+              name: "{{ item }}"
+              state:  present
+            with_items:
+              - "/opt/softwares/rpm_packages/unixODBC-2.3.1-11.el7.x86_64.rpm"
+              - "/opt/softwares/rpm_packages/unixODBC-devel-2.3.1-11.el7.x86_64.rpm"
+
+      - name: mysql-connector-odbc package install
+        block:
+          - name: installing mysql-connector-odbc package
+            yum:
+              name: mysql-connector-odbc
+              state:  present
+        rescue:
+          - debug:
+              msg:  "No package mysql-connector-odbc available"
+
+          - name: installing mysql-connector-odbc rpm package
+            yum:
+              name: /opt/softwares/rpm_packages/mysql-connector-odbc-5.2.5-7.el7.x86_64.rpm
+              state:  present
+
+      - name: ncurses-devel rpm package install
+        yum:
+          name: /opt/softwares/rpm_packages/ncurses-devel-5.9-14.20130511.el7_4.x86_64.rpm
+          state: present
+
+      - name: lksctp-tools package install
+        block:
+          - name: installing lksctp-tools package
+            yum:
+              name: lksctp-tools
+              state:  present
+        rescue:
+          - debug:
+              msg:  "No package lksctp-tools available"
+
+          - name: lksctp-tools rpm package install
+            yum:
+              name: /opt/softwares/rpm_packages/lksctp-tools-1.0.17-2.el7.x86_64.rpm
+              state:  present
+
+      - name: lksctp-tools-devel package install
+        block:
+          - name: installing lksctp-tools-devel package
+            yum:
+              name: lksctp-tools-devel
+              state:  present
+        rescue:
+          - debug:
+              msg:  "No package lksctp-tools-devel available"
+
+          - name: lksctp-tools-devel rpm package install
+            yum:
+              name: /opt/softwares/rpm_packages/lksctp-tools-devel-1.0.17-2.el7.x86_64.rpm
+
+      - name: mod_ssl package install
+        block:
+          - name: install mod_ssl package
+            yum:
+              name: mod_ssl
+              state:  present
+        rescue:
+          - debug:
+              msg:  "No package mod_ssl available"
+
+          - name: mod_ssl rpm install
+            yum:
+              name: /opt/softwares/rpm_packages/mod_ssl-2.4.6-80.el7.centos.1.x86_64.rpm
+              state:  present
+
+      - name: create grpup
+        group:
+          name: otp
+          state:  present
+
+      - name: create user and add into otp group
+        user:
+          name: otpuser
+          group:  otp
+          state:  present
+
+      - name: Copy erlang source files
+        copy:
+          src: files/otp_src_21_0.tar.gz
+          dest: /opt/softwares/
+          owner: root
+          group: root
+          mode: 0755
+
+      - name: unarchive file
+        unarchive:
+          src: /opt/softwares/otp_src_21_0.tar.gz
+          dest: /opt/softwares/
+          remote_src: yes
+
+      - name: Configure erlang
+        command:  ./configure --prefix=/home/otpuser --enable-odbc --enable-smp-support --enable-threads --enable-sctp --enable-ssl
+        args:
+          chdir:  /opt/softwares/otp_src_21.0/
+
+      - name: Make erlang
+        command: sudo  make
+        args:
+          chdir:  /opt/softwares/otp_src_21.0/
+
+      - name: Make Install erlang
+        command: sudo make install
+        args:
+          chdir:  /opt/softwares/otp_src_21.0/
+      
+      - name: change permission
+        command:  "chown  -R  otpuser:otp /home/otpuser/"
+        args:
+          chdir:  /opt/softwares/otp_src_21.0/
+
+      - name: Configure otpuser bash profile
+        copy:
+          src:  files/bash_profile.sh
+          dest: /home/otpuser/.bash_profile
+          owner: otpuser
+          group:  otp
+          mode: '0644'
+          backup: yes
+
+      - name: Configure root bash profile
+        copy:
+          src:  files/bash_profile.sh
+          dest: /root/.bash_profile
+          owner: otpuser
+          group:  otp
+          mode: '0644'
+          backup: yes
+
+      - name: Configure devops bash profile
+        copy:
+          src:  files/bash_profile.sh
+          dest: /home/devops/.bash_profile
+          owner: otpuser
+          group:  otp
+          mode: '0644'
+          backup: yes
+
+
+
+              
+
