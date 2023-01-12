@@ -1,0 +1,33 @@
+#############################################################
+# AppManager Configuration File
+# Author(s): Janaka Padukka, K K D N K Kumara
+# Date: 15/06/2010
+# Version: 1.0
+#############################################################
+
+
+#Global Configurations
+ADMIN_API_HEARTBEAT		= 10.184.38.217 
+SVN_HEARTBEAT			= 10.184.38.217
+APP_NODES				= {{ ansible_facts['default_ipv4']['address'] }}
+
+#Project Configurations
+COMMON_SVN				= http\://${SVN_HEARTBEAT}/svn/millicom/common
+PROJECTS_SVN			= http\://${SVN_HEARTBEAT}/svn/millicom/projects
+TOMCAT_HOME				= /usr/local/tomcat2
+TEMP_HOME				= /opt/svn/svntemp
+WEB_ROOT				= http\://localhost\:8081
+LOG_LEVEL				= ALL
+
+GET_PORT				= http\://${ADMIN_API_HEARTBEAT}/admin/index.php/service/GetPort
+READ_PORT				= http\://${ADMIN_API_HEARTBEAT}/admin/index.php/service/ReadPort
+UNDEPLOY				= http\://${ADMIN_API_HEARTBEAT}/admin/index.php/service/Undeploy
+DEPLOY					= http\://${ADMIN_API_HEARTBEAT}/admin/index.php/service/Deploy
+GET_CODE				= http\://${ADMIN_API_HEARTBEAT}/admin/index.php/service/GetCode
+ADD_CODE				= http\://${ADMIN_API_HEARTBEAT}/admin/index.php/IvrConfigurations/CreateAccessCodeGuiTool
+DEL_CODE				= http\://${ADMIN_API_HEARTBEAT}/admin/index.php/IvrConfigurations/DeleteAccessCodeGuiTool
+
+LOCATE_SERVICE			= http\://${ADMIN_API_HEARTBEAT}/fsa/services?name=
+GTE_SERVICE			    = http\://${ADMIN_API_HEARTBEAT}
+CREATE_ACCESS_CODE		= http\://${ADMIN_API_HEARTBEAT}/fsa/accesscodes
+GET_FREE_PORT			= http\://${ADMIN_API_HEARTBEAT}/fsa/port/

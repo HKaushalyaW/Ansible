@@ -1,0 +1,75 @@
+#################################################
+# Global properties for VoiceXML Interpreter.   #
+# Author  :- K K D Nuwan Kaman Kumara           #
+# Date    :- 31-12-2008                         #
+# Version :- Linux                              #
+#################################################
+
+vxml.vxmlserverid={{ ansible_facts['hostname'] }}
+vxml.ivrserverid=1
+vxml.serverport=8080
+vxml.vxmlserverurl=http://{{ ansible_facts['hostname'] }}:8080/vxml
+vxml.recordingfilepath=/usr/local/tomcat/webapps/vxml_record/
+vxml.fileuploadjsppath=http://{{ ansible_facts['hostname'] }}:8080/vxml/uploadProcess.do
+vxml.errorfileurl=http://{{ ansible_facts['hostname'] }}:8080/vxml/error_file.wav<$>1
+vxml.busyfileurl=http://{{ ansible_facts['hostname'] }}:8080/vxml/system_busy.wav<$>1
+vxml.recordingfiletypevoice=wav
+vxml.recordingfiletypevideo=3gp
+
+#RPC related parameters
+vxml.rpc.cookie=wavenet
+vxml.rpc.function=handle_vxml_response_data
+ccxml.rpc.function=handle_ccxml_response_data
+
+vxml.rpcpeer1=hmpivr@{{ ansible_facts['hostname'] }}
+vxml.rpcpeer50=prime_umb@{{ ansible_facts['hostname'] }}
+
+vxml.rpc.module.voice=hmp_vxml_svr
+vxml.rpc.module.text=prime_vxml_umb_server
+
+# VXML remote processes
+vxml.remote.process.voice=hmp_vxml_svr_1
+vxml.remote.process.text=prime_umb_vxml_server
+
+# ESME configuration for send USSD and SMS in multi-channel environment
+esme.rpc.node=prime_umb@{{ ansible_facts['hostname'] }}
+esme.rpc.module=omniesme
+esme.rpc.function=send_notification
+
+# Log Server parameters for SCE(this parameters send to SCE to write log by using RPC)
+vxml.log.rpcpeer=wn_event_logger@{{ ansible_facts['hostname'] }}
+vxml.log.rpcmodule=gen_event
+vxml.log.rpcfunction=notify
+
+# Log Server parameters for INTERPRETER
+interpreter.log.rpcpeer=wn_event_logger@{{ ansible_facts['hostname'] }}
+interpreter.log.rpcmodule=gen_event
+interpreter.log.rpcfunction=notify
+
+ivr.log.activity.globalregname=ivr_activity_log_{{ ansible_facts['hostname'] }}
+ivr.log.trace.globalregname=ivr_trace_log_{{ ansible_facts['hostname'] }}
+
+# OBD related parameters
+vxml.dialout.server=hmpivrtest@{{ ansible_facts['hostname'] }}
+vxml.obd.rpcmodule=hmp_vxml_svr_2
+vxml.obd.rpcfunction=handle_obd_response_data
+vxml.obd.successurl="http://"
+vxml.obd.failurl="http://"
+vxml.obd.block=1
+vxml.obd.interface.node=obd_interface
+
+#JInterface Related Properties
+jinterface.node.name=0interpreter
+jinterface.node.count=1
+jinterface.vxml.mbox=vxml
+jinterface.ccxml.mbox=ccxml
+jinterface.log.mbox=log
+
+#CCG JInterface Related Properties
+ccg.interface.node.name=ccg_integrator
+ccg.remote.node.name=ccg@projects2
+ccg.remote.process.name=ccg_api
+ccg.endpoint.uri="ws://10.210.12.124:8080/ccg/camel/call_charging/"
+
+#Transfer event log
+transfer.log.event.handler=call_transfer_log

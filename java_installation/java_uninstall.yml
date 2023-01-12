@@ -1,0 +1,11 @@
+---
+  - name: jdk-7u221 uninstall 
+    hosts:  dev
+    become_user:  root
+    become_method: sudo
+    become: yes
+    tasks:
+      - name: uninstall java 
+        command:  "rpm -e jdk1.7-1.7.0_221-fcs.x86_64"
+          
+        

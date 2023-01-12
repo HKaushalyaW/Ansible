@@ -1,0 +1,21 @@
+---
+  - name: Fusion Studio Installation
+    hosts:  dev
+    become_user:  root
+    become_method: sudo
+    become: yes
+    tasks:
+      - name: Copy files
+        copy:
+          src:  "{{ item }}"
+          dest: /opt/softwares/rpm_packages/
+        with_items:
+          - files/jdk-8u212-linux-x64.tar.gz
+
+      - name: untar file 
+        unarchive:
+          src:  /opt/softwares/rpm_packages/jdk-8u212-linux-x64.tar.gz
+          dest: /opt
+          remote_src: yes
+          
+        
