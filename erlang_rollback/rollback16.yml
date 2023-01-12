@@ -1,0 +1,39 @@
+---
+  - name: Erlang 16 Rollback
+    hosts:  fusion
+    remote_user:  devops
+    become: yes
+    tasks:
+    - name: Change otpuser bash profile
+      copy:
+        src:  files/bash_profile.sh
+        dest: /home/otpuser/.bash_profile
+        owner: otpuser
+        group:  otp
+        mode: '0644'
+        backup: yes
+
+    - name: Change root bash profile
+      copy:
+        src:  files/bash_profile.sh
+        dest: /root/.bash_profile
+        owner: root
+        group:  root
+        mode: '0644'
+        backup: yes
+
+    - name: Make clean 
+      command: make clean
+      args:
+        chdir:  /opt/softwares/erlang/otp_src_R16B03
+
+    - name: remove erlang directory
+      command:  "rm -rf erlang"
+      args:
+        chdir:  /opt/softwares/
+
+    - name: remove erlang libraries
+      command:  "rm -rf /home/otpuser/bin"
+
+    - name: remove erlang libraries
+      command:  "rm -rf /home/otpuser/lib"
